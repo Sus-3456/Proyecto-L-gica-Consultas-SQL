@@ -1,2 +1,2 @@
-# Proyecto-L-gica-Consultas-SQL
+# Proyecto-Logica-Consultas-SQL
 Solution of 64 SQL queries
