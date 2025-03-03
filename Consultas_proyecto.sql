@@ -11,11 +11,11 @@ where actor_id between 30 and 40;
 
 --4. Obtén las películas cuyo idioma coincide con el idioma original
 select * from film
-
+where language_id = original_language_id;
 
 -- 5. Ordena las películas por duración de forma ascendente.
-select "title"  from film 
-order by "length" asc;
+select title from film 
+order by length asc NULLS last;
 
 -- 6. Encuentra el nombre y apellido de los actores que tengan "Allen" en su apellido
 select 
@@ -73,7 +73,7 @@ from film
 where "length" > '180';
 
 -- 15. ¿Cuánto dinero ha generado en total la empresa?
-select count("amount") as "beneficio"
+select sum("amount") as "beneficio"
 from payment;
 
 -- 16. Muestra los 10 clientes con mayor valor de id.
@@ -379,13 +379,12 @@ group by actor."actor_id"
 order by actor."Apellido";
 
 -- 56. Encuentra el nombre y apellido de los actores que no han actuado en ninguna película de la categoría ‘Music’.
-select
-	"Nombre", "Apellido"
+select distinct actor.first_name, actor.last_name
 from actor
-join film_actor on actor.actor_id = film_actor.actor_id
-join film_category on film_actor.film_id = film_category.film_id 
-join category on film_category.category_id = category.category_id 
-where category.name = 'Music';
+left join film_actor on actor.actor_id = film_actor.actor_id
+left join film_category on film_actor.film_id = film_category.film_id
+left join category on film_category.category_id = category.category_id
+where category.name != 'music' or category.name is null;
 
 -- 57. Encuentra el título de todas las películas que fueron alquiladas por más de 8 días.
 select "title"
